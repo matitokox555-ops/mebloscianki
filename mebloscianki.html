@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Najlepsze Meblościanki</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background: linear-gradient(90deg, #ff4d6d, #6a5aff);
+            text-align: center;
+            font-size: 2.5em;
+            padding: 30px 0;
+            text-shadow: 0 0 10px #ff4d6d, 0 0 20px #6a5aff;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .gallery-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto 30px auto;
+        }
+
+        .gallery-container {
+            max-width: 600px;
+            height: 400px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .gallery-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            filter: brightness(1.2);
+            transition: filter 0.3s;
+        }
+
+        .gallery-container img:hover {
+            filter: brightness(1.4);
+        }
+
+        .nav-btn {
+            font-size: 2em;
+            color: #fff;
+            background-color: #6a5aff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            margin: 0 15px; /* odsunięcie od obrazu */
+            box-shadow: 0 0 10px #4a3dff;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #4a3dff;
+            box-shadow: 0 0 20px #6a5aff;
+        }
+
+        .info {
+            text-align: center;
+            max-width: 700px;
+            margin-top: 15px;
+        }
+
+        .price {
+            font-size: 1.9em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px #6a5aff, 0 0 20px #ff4d6d;
+            margin-bottom: 10px;
+        }
+
+        .buy-btn {
+            display: inline-block;
+            background-color: #6a5aff;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 0 10px #6a5aff;
+            transition: background 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .buy-btn:hover {
+            background-color: #4a3dff;
+            box-shadow: 0 0 20px #4a3dff;
+        }
+
+        .description {
+            text-align: left;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .description h3 {
+            color: #6a5aff;
+            margin-top: 0;
+        }
+
+        .description ul {
+            padding-left: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            background-color: #1a1a1a;
+            flex-shrink: 0;
+        }
+
+        /* --- Modal --- */
+        .modal {
+            display: none; /* domyślnie ukryty */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            color: #fff;
+            box-shadow: 0 0 20px #6a5aff;
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #6a5aff;
+            border: none;
+            color: #fff;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #4a3dff;
+        }
+
+        .close-btn:hover {
+            background-color: #4a3dff;
+            box-shadow: 0 0 20px #6a5aff;
+        }
+    </style>
+</head>
+<body>
+
+<header>Najlepsze Meblościanki</header>
+
+<main>
+    <div class="gallery-wrapper">
+        <button class="nav-btn prev" onclick="prevImage()">❮</button>
+        <div class="gallery-container">
+            <img id="mainImage" src="obraz1.jpg" alt="Meblościanka">
+        </div>
+        <button class="nav-btn next" onclick="nextImage()">❯</button>
+    </div>
+
+    <div class="info">
+        <div class="price">2000 zł z montażem</div>
+        <button class="buy-btn" onclick="showModal()">Kup teraz</button>
+    </div>
+
+    <div class="description">
+        <h3>Opis produktu:</h3>
+        <p>Korpus wykonany z płyty laminowanej grubości 16mm w kolorze białym o zwiększonej odporności na zadrapania.</p>
+        <p>Cichy i płynny wysuw szuflad dzięki zastosowaniu prowadnic Quadro renomowanego producenta Hafele, które gwarantują niezawodność, stabilność i komfort użytkowania.</p>
+        <p>Górne szafki mocowane na zawieszce regulowanej.</p>
+        <h4>Wymiary:</h4>
+        <ul>
+            <li>Górne szafki: 60 cm wysokości, 32 cm głębokości</li>
+            <li>Dolne szafki: 85 cm wysokości (z blatem), 47 cm głębokości</li>
+            <li>Słupek: 210 cm wysokości, 58 cm głębokości</li>
+        </ul>
+        <h4>W skład zestawu wchodzi:</h4>
+        <ul>
+            <li>Szafka pod zlew 80</li>
+            <li>Szafka dolna 60</li>
+            <li>Szafka dolna 60 z szufladami Quadro</li>
+            <li>Szafka górna 80</li>
+            <li>Szafka górna 60</li>
+            <li>Okap 60</li>
+            <li>Słupek do zabudowy piekarnika i mikrofali</li>
+            <li>120 cm blatu ciętego na każdą szafkę z osobna (szafka pod zlew nie posiada blatu)</li>
+        </ul>
+    </div>
+</main>
+
+<footer>© 2026 Najlepsze Meblościanki</footer>
+
+<!-- Modal -->
+<div id="buyModal" class="modal">
+    <div class="modal-content">
+        <p>O kupno proszę dzwonić: <strong>537 159 656</strong></p>
+        <button class="close-btn" onclick="closeModal()">Zamknij</button>
+    </div>
+</div>
+
+<script>
+    const images = ["obraz1.jpg", "obraz2.jpg", "obraz3.jpg", "obraz4.jpg", "obraz5.jpg"];
+    let currentIndex = 0;
+
+    const mainImage = document.getElementById("mainImage");
+    const modal = document.getElementById("buyModal");
+
+    function showImage(index) {
+        mainImage.src = images[index];
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+    }
+
+    function showModal() {
+        modal.style.display = "flex";
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    // Zamknij modal po kliknięciu poza nim
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>
